@@ -1,15 +1,15 @@
-import Vue from "vue";
-import Router from "vue-router";
-import Index from "../views";
+import Vue from 'vue'
+import Router from 'vue-router'
+import Index from '../views'
 
-Vue.use(Router);
+Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: "/",
-      name: "top",
-      component: Index
-    }
-  ]
-});
+      path: '/',
+      name: 'top',
+      component: Index,
+    },
+  ],
+})
