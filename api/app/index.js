@@ -5,6 +5,7 @@ const app = express()
 const ORIGIN = 'http://localhost:8080'
 
 const headers = {
+  'Content-Type': 'application/json',
   'Access-Control-Allow-Origin': ORIGIN,
 }
 

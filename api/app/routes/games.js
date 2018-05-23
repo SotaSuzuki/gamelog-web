@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 router.get('/:id', (req, res) => {
-  res.send({
+  const response = {
     game: {
       title: 'Chrono Trigger',
       description: '時空を越えるRPG',
@@ -37,7 +37,9 @@ router.get('/:id', (req, res) => {
         },
       ],
     },
-  })
+  }
+
+  res.json(response)
 })
 
 module.exports = router
