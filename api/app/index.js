@@ -1,14 +1,20 @@
 const express = require('express')
+const router = require('./routes')
 const app = express()
 
+const ORIGIN = 'http://localhost:8080'
+
+const headers = {
+  'Access-Control-Allow-Origin': ORIGIN,
+}
+
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:8080')
+  res.set(headers)
   next()
 })
 
-app.get('/', (req, res) => {
-  res.send('Hello Hoge!')
-})
+app.use(router)
 
-app.listen(8081)
-console.log('listening to port 8081')
+app.listen(8081, () => {
+  console.log('listening to port 8081')
+})
