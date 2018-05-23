@@ -57,11 +57,28 @@ has many reviews
 
 - id (PK, AI)
 - maker_id (FK)
-- name
+<!-- - image_url -->
+- title
 - description
 - review_count
+- release_date
 - created_at
 - updated_at
+
+## platforms
+
+belongs to games
+
+- code (PK, AI)
+- name
+
+## games_platforms
+
+belongs to games
+belongs to platforms
+
+- game_id (FK)
+- platform_code (FK)
 
 ## reviews
 
@@ -71,5 +88,23 @@ belongs to a user
 - id (PK, AI)
 - game_id (FK)
 - user_id (FK)
-- created_at
+- body
+- published_at
 - updated_at
+
+---
+
+## Drafts
+
+### series
+
+has many games
+
+### images or photos
+
+belongs to games
+
+- id (PK, AI)
+- game_id (FK)
+- referenceFrom
+- referenceName
