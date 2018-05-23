@@ -19,3 +19,5 @@ app.use(router)
 app.listen(8081, () => {
   console.log('listening to port 8081')
 })
+
+module.exports.app = app
