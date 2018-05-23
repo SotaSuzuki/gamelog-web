@@ -1,3 +1,3 @@
 # Gamelog
 
-This repo is just a practice for creating a web app from scrach by myself.
+This repo is just a practice for creating a web app from scratch by myself.
