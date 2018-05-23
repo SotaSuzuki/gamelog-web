@@ -1,16 +1,6 @@
 <template>
   <div class="home">
     <h1>Gamelog</h1>
-    <HelloWorld msg="Hahaha"/>
+    <p>This project is incredibly important for human beings.</p>
   </div>
 </template>
-
-<script>
-import HelloWorld from '@/components/HelloWorld.vue'
-
-export default {
-  components: {
-    HelloWorld,
-  },
-}
-</script>
