@@ -87,7 +87,8 @@ export default {
     async fetchGame () {
       try {
         const response = await this.$http.get(`/games/${this.gameId}`)
-        this.game = response.data.game
+        // NOTE このあたりの実装は ORM 使ってなんとかすべき
+        this.game = Object.assign(this.game, response.data.game)
       } catch (e) {
         console.error(e)
       }
