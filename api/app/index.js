@@ -1,5 +1,9 @@
 const express = require('express')
 const router = require('./routes')
+
+const dbConnect = require('./db')
+dbConnect()
+
 const app = express()
 
 const ORIGIN = 'http://localhost:8080'
