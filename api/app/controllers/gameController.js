@@ -1,20 +1,10 @@
-const { connection } = require('./../db')
+const GameModel = require('../models/Game')
 
 exports.game = (req, res) => {
   const id = req.params.id
-
-  connection.connect()
-
-  connection.query(`SELECT * FROM games WHERE id = ${id}`, (err, rows) => {
-    if (err) {
-      throw err
-    }
-    const game = rows[0]
-    const response = { game }
-    res.json(response)
-  })
-
-  connection.end()
+  GameModel.find({ id })
+    .then((game) => res.json({ game }))
+    .catch((err) => res.json({ message: err.message }))
 }
 
 // NOTE expected response
