@@ -8,6 +8,10 @@
           <td>{{game.title}}</td>
         </tr>
         <tr>
+          <th>概略</th>
+          <td>{{game.description}}</td>
+        </tr>
+        <tr>
           <th>ジャンル</th>
           <td>
             <span
@@ -88,7 +92,7 @@ export default {
       try {
         const response = await this.$http.get(`/games/${this.gameId}`)
         // NOTE このあたりの実装は ORM 使ってなんとかすべき
-        this.game = Object.assign(this.game, response.data.game)
+        this.game = Object.assign({}, this.game, response.data.game)
       } catch (e) {
         console.error(e)
       }
