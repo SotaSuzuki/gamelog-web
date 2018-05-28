@@ -5,36 +5,32 @@ class BaseModel {
     return this.name.toLowerCase() + 's'
   }
 
-  static init ({ attributes, options }) {
-
-  }
-
   static primaryKeys () {
     return ['id']
   }
 
   static getPrimaryIds (payload) {
-    const ids = {}
     const primaryKeys = this.primaryKeys()
-    primaryKeys.forEach((key) => {
+    return primaryKeys.reduce((ids, key) => {
       ids[key] = payload[key]
-    })
-    return ids
+      return ids
+    }, {})
   }
 
   static find (payload) {
     const primaryIds = this.getPrimaryIds(payload)
-    const whereStatements = []
-    Object.keys(primaryIds).forEach((key) => {
-      whereStatements.push(`${key} = ${primaryIds[key]}`)
-    })
+    const whereStatements = Object.keys(primaryIds).map((key) => `${key} = ${primaryIds[key]}`)
+
     return new Promise((resolve, reject) => {
       connection.query(`
         SELECT * FROM ${this.tableName()}
         WHERE ${whereStatements.join(' AND ')} LIMIT 1
-        `, (err, rows) => {
-        if (err) reject(err)
-        else resolve(rows[0])
+      `, (err, rows) => {
+        if (err) {
+          reject(err)
+          return
+        }
+        resolve(rows[0])
       })
     })
   }
