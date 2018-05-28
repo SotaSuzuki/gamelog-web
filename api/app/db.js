@@ -10,4 +10,5 @@ client.connect()
 
 module.exports = {
   connection: client,
+  escape: mysql.escape,
 }

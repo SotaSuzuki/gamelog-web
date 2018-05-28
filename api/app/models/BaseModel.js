@@ -1,4 +1,4 @@
-const { connection } = require('./../db')
+const { connection, escape } = require('./../db')
 
 class BaseModel {
   static tableName () {
@@ -12,14 +12,15 @@ class BaseModel {
   static getPrimaryIds (payload) {
     const primaryKeys = this.primaryKeys()
     return primaryKeys.reduce((ids, key) => {
-      ids[key] = payload[key]
+      ids[key] = escape(payload[key])
       return ids
     }, {})
   }
 
   static find (payload) {
     const primaryIds = this.getPrimaryIds(payload)
-    const whereStatements = Object.keys(primaryIds).map((key) => `${key} = ${primaryIds[key]}`)
+    const whereStatements = Object.keys(primaryIds)
+      .map((key) => `${key} = ${primaryIds[key]}`)
 
     return new Promise((resolve, reject) => {
       connection.query(`
