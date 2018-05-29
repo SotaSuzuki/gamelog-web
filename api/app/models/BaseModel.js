@@ -31,7 +31,7 @@ class BaseModel {
           reject(err)
           return
         }
-        resolve(rows[0])
+        resolve(rows[0]) // NOTE new this(rows[0])
       })
     })
   }
