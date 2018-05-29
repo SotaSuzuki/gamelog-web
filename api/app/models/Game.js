@@ -1,42 +1,34 @@
+const { connection, escape } = require('./../db')
 const BaseModel = require('./BaseModel')
 
 class Game extends BaseModel {
-  // afterSave () {
-  //   super()
-  //   if (this.isChanged("name")) {
-  //     ////////
-  //   }
-  // }
+  static findGenres (payload) {
+    const relationTableName = 'games_genres'
+    const genreTableName = 'genres'
+    const id = this.getPrimaryIds(payload).id
+    return new Promise((resolve, reject) => {
+      connection.query(`
+        SELECT * FROM ${relationTableName}
+        WHERE game_id = ${id} LIMIT 10
+      `, (err, rows) => {
+        if (err) {
+          reject(err)
+          return
+        }
+        const whereStatements = rows.map((row) => `code = ${escape(row.genre_code)}`)
+        connection.query(`
+          SELECT * FROM ${genreTableName}
+          WHERE ${whereStatements.join(' OR ')} LIMIT 10
+        `, (err, rows) => {
+          if (err) {
+            reject(err)
+            return
+          }
+          resolve(rows)
+        })
+      })
+    })
+  }
 }
-
-// console.log(game)
-//
-// {
-//   previousValues: {
-//     id: 10,
-//     name: 'DRAGON QUESET XI',
-//   },
-//   values: {
-//     id: 10,
-//     name: 'DRAGON QUESET XI',
-//   },
-//   isNewRecord: false
-//   update: function,
-//   destroy: function,
-//   isChanged: function,
-// }
-//
-// console.log(game.toJSON())
-//
-// {
-//   id: 10,
-//   name: 'DRAGON QUEST XI',
-// }
-
-// NOTE こうしてもいい
-// Game.init({
-//   attributes,
-//   options,
-// })
 
 module.exports = Game
