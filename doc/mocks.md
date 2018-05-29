@@ -115,17 +115,17 @@ to display `/games/:id`
 INSERT INTO makers (name)
   VALUES ('スクウェア');
 
-INSERT INTO games (title, description)
-  VALUES ('Final Fantasy 5', 'ジョブチェンジでキャラクターを自由にカスタマイズしよう');
+INSERT INTO games (title, description, maker_id)
+  VALUES ('Final Fantasy 5', 'ジョブチェンジでキャラクターを自由にカスタマイズしよう', 1);
 
 INSERT INTO platforms (id, name)
-  VALUES (1, 'SFC')
+  VALUES (1, 'SFC');
 
 INSERT INTO genres (code, name)
   VALUES ('rpg', 'ロールプレイング');
 
 INSERT INTO games_platforms (game_id, platform_id)
-  VALUES (1, 1)
+  VALUES (1, 1);
 
 INSERT INTO games_genres (game_id, genre_code)
   VALUES (1, 'rpg');
