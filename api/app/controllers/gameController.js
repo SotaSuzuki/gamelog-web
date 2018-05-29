@@ -1,46 +1,34 @@
-const GameModel = require('../models/Game')
+const Game = require('../models/Game')
+const Genre = require('../models/Genre')
+const Maker = require('../models/Maker')
+const Platform = require('../models/Platform')
 
-exports.game = (req, res) => {
+exports.show = async (req, res) => {
   const id = req.params.id
-  GameModel.find({ id })
-    .then((game) => res.json({ game }))
-    .catch((err) => res.json({ message: err.message }))
-}
 
-// NOTE expected response
-// const response = {
-//   game: {
-//     title: 'Chrono Trigger',
-//     description: '時空を越えるRPG',
-//     releaseDate: '1995/3/11',
-//     reviewCount: 2,
-//     maker: {
-//       name: 'スクウェア・エニックス',
-//     },
-//     genres: [
-//       { id: 1, name: 'ロールプレイング' },
-//     ],
-//     platforms: [
-//       { id: 1, name: 'SFC' },
-//       { id: 2, name: 'DS' },
-//     ],
-//     reviews: [
-//       {
-//         body: 'マールは俺の嫁。',
-//         author: {
-//           id: '100',
-//           name: 'hiropon',
-//         },
-//         publishedAt: '2001/3/9',
-//       },
-//       {
-//         body: '人生で一番やりこんだゲーム。6周はした。',
-//         author: {
-//           id: '101',
-//           name: 'pomodoroX',
-//         },
-//         publishedAt: '2000/11/1',
-//       },
-//     ],
-//   },
-// }
+  try {
+    let responseData = {}
+
+    const game = await Game.find({ id })
+    const maker = await Maker.find({ id: game.maker_id })
+    // NOTE games_genres から取ってきたいが、難しそうなので一旦決め打ちしてる
+    // あと、 Genre.findAll で複数とってきたいところ
+    // そしたら変数名も変更する (genre -> genres, platform -> platforms)
+    const genreCodes = ['rpg']
+    const genre = await Genre.find({ code: genreCodes[0] })
+    // NOTE 上に同じ
+    const platformIds = [1]
+    const platform = await Platform.find({ id: platformIds[0] })
+
+    responseData.game = game
+    responseData.game.maker = maker
+    responseData.game.genres = [genre]
+    responseData.game.platforms = [platform]
+    // NOTE game.reviews もおいおい必要
+    // [{body<string>, author{}, publishedAt<string>}]
+
+    res.json(responseData)
+  } catch (err) {
+    res.json({ message: err.message })
+  }
+}
