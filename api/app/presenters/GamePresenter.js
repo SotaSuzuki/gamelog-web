@@ -1,8 +1,6 @@
 const BasePresenter = require('./BasePresenter')
 const Game = require('../models/Game')
-// const Genre = require('../models/Genre')
 const Maker = require('../models/Maker')
-const Platform = require('../models/Platform')
 
 class GamePresenter extends BasePresenter {
   constructor ({ id }) {
@@ -19,15 +17,11 @@ class GamePresenter extends BasePresenter {
         const makerId = game.json.maker_id
         const maker = await Maker.find({ id: makerId })
         const genres = await Game.findGenres({ id })
-        console.log('genres', genres)
-        // const genreCode = ['rpg']
-        const platformIds = [1]
-        // const genre = await Genre.find({ code: genreCode[0] })
-        const platform = await Platform.find({ id: platformIds[0] })
+        const platforms = await Game.findPlatforms({ id })
         response.game = game.json
         response.game.maker = maker.json
         response.game.genres = genres
-        response.game.platforms = [platform.json]
+        response.game.platforms = platforms
         resolve(response)
       } catch (err) {
         reject(err)
