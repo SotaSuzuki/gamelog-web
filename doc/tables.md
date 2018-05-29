@@ -125,7 +125,7 @@ has many reviews
 ```sql
 CREATE TABLE games (
   id INT(10) AUTO_INCREMENT,
-  title VARCHAR(255) NOT NULL,
+  title VARCHAR(128) NOT NULL,
   image_url VARCHAR(255),
   description VARCHAR(1024) NOT NULL,
   maker_id INT(10),
@@ -151,10 +151,9 @@ belongs to games
 ```sql
 CREATE TABLE platforms (
   id INT(10) AUTO_INCREMENT,
-  name VARCHAR(255) NOT NULL,
+  name VARCHAR(128) NOT NULL,
   PRIMARY KEY(id)
 );
-
 ```
 
 ## games_platforms
